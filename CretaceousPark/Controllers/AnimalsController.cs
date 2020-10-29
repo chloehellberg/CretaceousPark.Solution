@@ -19,7 +19,7 @@ namespace CretaceousPark.Controllers
 
     // GET api/animals
     [HttpGet]
-    public ActionResult<IEnumerable<Animal>> Get(string species, string gender, string name)
+    public ActionResult<IEnumerable<Animal>> Get(string species, string gender, string name, int page, int size)
     {
       var query = _db.Animals.AsQueryable();
 
@@ -35,10 +35,20 @@ namespace CretaceousPark.Controllers
       {
         query = query.Where(entry => entry.Name == name);
       }
+      if (page != 0)
+      {
+        if (size !=0 )
+        {
+        }
+        else {
+          size = 2;
+        }
+        var entries = query.OrderBy(o => o.Name).Skip((page - 1) * size).Take(size).ToList(); //finds the entries to be displayed
+        query = entries.AsQueryable();
+      }
 
       return query.ToList();
     }
-
     // POST api/animals
     [HttpPost]
     public void Post([FromBody] Animal animal)

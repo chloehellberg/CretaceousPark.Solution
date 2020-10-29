@@ -31,9 +31,9 @@ namespace CretaceousPark
     {
       services.AddCors();
       services.AddDbContext<CretaceousParkContext>(opt =>
-          opt.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+        opt.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-      
+
       var appSettingsSection = Configuration.GetSection("AppSettings");
       services.Configure<AppSettings>(appSettingsSection);
 
